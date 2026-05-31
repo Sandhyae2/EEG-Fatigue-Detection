@@ -2,26 +2,25 @@ import mne
 import numpy as np
 from mne.preprocessing import ICA
 import os
-from sklearn.model_selection import LeaveOneGroupOut
-from sklearn.svm import SVC
-from scipy.stats import ttest_ind
-import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
 import joblib
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from xgboost import XGBClassifier
-
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    confusion_matrix,
-    roc_curve,
-    auc
-)
+import matplotlib.pyplot as plt
+# from sklearn.model_selection import LeaveOneGroupOut
+# from sklearn.svm import SVC
+# from scipy.stats import ttest_ind
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.neighbors import KNeighborsClassifier
+# from xgboost import XGBClassifier
+# from sklearn.metrics import (
+#     accuracy_score,
+#     precision_score,
+#     recall_score,
+#     f1_score,
+#     confusion_matrix,
+#     roc_curve,
+#     auc
+# )
 
 for f in os.listdir('/content'):
     print(f)
