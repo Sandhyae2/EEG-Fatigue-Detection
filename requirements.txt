@@ -1,4 +1,6 @@
-Python 
-Numpy 
-Streamlit 
-Mne 
+numpy 
+streamlit 
+mne 
+matplotlib
+scipy
+joblib
