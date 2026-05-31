@@ -1,5 +1,3 @@
-!pip install mne
-
 import mne
 import numpy as np
 from mne.preprocessing import ICA
