@@ -1,6 +1,6 @@
 import numpy as np
 import joblib
-from features import extract_features
+#from features import extract_features
 
 # load model and scaler
 model = joblib.load("svm_model.pkl")
