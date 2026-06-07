@@ -50,8 +50,6 @@ if uploaded_file is not None:
 
         st.write("Fatigue epochs (%):", fatigue_percent)
 
-        # 🔍 DEBUG 3 (ADD HERE - VERY IMPORTANT)
-        st.write("Model prediction:", prediction)
 
         # OPTIONAL DEBUG (HIGHLY RECOMMENDED)
         st.write("Decision score:", model.decision_function(features))
