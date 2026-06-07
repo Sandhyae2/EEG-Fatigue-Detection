@@ -4,8 +4,8 @@ import joblib
 from features import extract_features
 
 # Load model and scaler
-model = joblib.load("svm_fatigue_model(1).pkl")
-scaler = joblib.load("scaler (2).pkl")
+model = joblib.load("svm_fatigue_model.pkl")
+scaler = joblib.load("scaler.pkl")
 
 st.title("EEG Fatigue Detection System")
 
