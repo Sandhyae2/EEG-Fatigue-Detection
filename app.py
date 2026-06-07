@@ -37,6 +37,12 @@ if uploaded_file is not None:
         st.write("Scaler expects:", scaler.n_features_in_)
 
 # Current reshape
+        features = np.array(features)
+
+# Average across epochs
+        features = features.mean(axis=0)
+
+# Make it a single sample
         features = features.reshape(1, -1)
 
         st.write("After reshape:", features.shape)
