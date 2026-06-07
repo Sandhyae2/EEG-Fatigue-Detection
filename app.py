@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import joblib
+from features import extract_features
 
 # Load model and scaler
 model = joblib.load("svm_fatigue_model.pkl")
