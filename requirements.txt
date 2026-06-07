@@ -4,3 +4,5 @@ mne
 matplotlib
 scipy
 joblib
+scikit-learn
+streamlit
