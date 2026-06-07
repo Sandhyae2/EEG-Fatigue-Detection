@@ -27,15 +27,22 @@ if uploaded_file is not None:
         # 🔍 DEBUG 1 (ADD HERE)
         st.write("Raw feature shape:", np.array(features).shape)
 
+       
         # STEP 3: Convert to numpy array
-        features = np.array(features).reshape(1, -1)
+        features = np.array(features)
 
-        # 🔍 DEBUG 2 (ADD HERE)
-        st.write("Final feature shape (for model):", features.shape)
+        st.write("Raw feature shape:", features.shape)
 
-        # STEP 4: Scale features
+# Check scaler requirements
+        st.write("Scaler expects:", scaler.n_features_in_)
+
+# Current reshape
+        features = features.reshape(1, -1)
+
+        st.write("After reshape:", features.shape)
+
+# STEP 4: Scale features
         features = scaler.transform(features)
-
         # STEP 5: Predict
         prediction = model.predict(features)
 
