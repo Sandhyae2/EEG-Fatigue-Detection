@@ -1,3 +1,7 @@
+import numpy as np
+import mne
+from mne.preprocessing import ICA
+
 def extract_features(file_path, data_format='int16'):
 
     raw = mne.io.read_raw_cnt(
