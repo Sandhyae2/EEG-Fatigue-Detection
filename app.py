@@ -40,17 +40,15 @@ if uploaded_file is not None:
         features = np.array(features)
 
 # Average across epochs
-        features = features.mean(axis=0)
+        features = extract_features("temp_eeg_file")
 
-# Make it a single sample
-        features = features.reshape(1, -1)
+        features_scaled = scaler.transform(features)
 
-        st.write("After reshape:", features.shape)
+        epoch_predictions = model.predict(features_scaled)
 
-# STEP 4: Scale features
-        features = scaler.transform(features)
-        # STEP 5: Predict
-        prediction = model.predict(features)
+        fatigue_percent = np.mean(epoch_predictions) * 100
+
+        st.write("Fatigue epochs (%):", fatigue_percent)
 
         # 🔍 DEBUG 3 (ADD HERE - VERY IMPORTANT)
         st.write("Model prediction:", prediction)
@@ -59,7 +57,7 @@ if uploaded_file is not None:
         st.write("Decision score:", model.decision_function(features))
 
         # STEP 6: Output result
-        if prediction[0] == 1:
+        if fatigue_percent > 50:
             st.error("⚠ Fatigue Detected")
         else:
             st.success("✅ Normal State")
