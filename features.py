@@ -78,7 +78,7 @@ def extract_features(file_path, data_format='int16'):
         beta_power,
         theta_alpha_ratio
     ], axis=1)
-    
+    features = features 
     # mean_feat = np.mean(features, axis=0)
     # std_feat = np.std(features, axis=0)
 
