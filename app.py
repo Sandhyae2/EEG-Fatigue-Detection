@@ -9,7 +9,9 @@ scaler = joblib.load("scaler.pkl")
 
 st.title("EEG Fatigue Detection System")
 
-uploaded_file = st.file_uploader("Upload EEG file (.cnt or supported format)")
+uploaded_file = st.file_uploader(
+    "Upload EEG file (.cnt or supported format)"
+)
 
 if uploaded_file is not None:
 
@@ -17,45 +19,43 @@ if uploaded_file is not None:
 
     if st.button("Predict"):
 
-        # STEP 1: Save uploaded file temporarily
+        # Save uploaded file
         with open("temp_eeg_file", "wb") as f:
             f.write(uploaded_file.read())
 
-        # STEP 2: Extract features
+        # Extract epoch-wise features
         features = extract_features("temp_eeg_file")
 
-        # 🔍 DEBUG 1 (ADD HERE)
-        st.write("Raw feature shape:", np.array(features).shape)
-
-       
-        # STEP 3: Convert to numpy array
-        features = np.array(features)
-
-        st.write("Raw feature shape:", features.shape)
-
-# Check scaler requirements
+        st.write("Feature shape:", features.shape)
         st.write("Scaler expects:", scaler.n_features_in_)
 
-# Current reshape
-        features = np.array(features)
-
-# Average across epochs
-        features = extract_features("temp_eeg_file")
-
+        # Scale all epochs
         features_scaled = scaler.transform(features)
 
+        # Predict each epoch
         epoch_predictions = model.predict(features_scaled)
 
+        # Fatigue percentage
         fatigue_percent = np.mean(epoch_predictions) * 100
 
-        st.write("Fatigue epochs (%):", fatigue_percent)
+        st.write("Fatigue epochs (%):", round(fatigue_percent, 2))
 
+        # Average decision score across epochs
+        decision_scores = model.decision_function(features_scaled)
 
-        # OPTIONAL DEBUG (HIGHLY RECOMMENDED)
-        st.write("Decision score:", model.decision_function(features))
+        st.write(
+            "Mean decision score:",
+            round(float(np.mean(decision_scores)), 2)
+        )
 
-        # STEP 6: Output result
-        if fatigue_percent > 50:
+        # Final decision
+        if fatigue_percent >= 50:
             st.error("⚠ Fatigue Detected")
         else:
             st.success("✅ Normal State")
+
+        # Optional debug
+        st.write(
+            "First 20 epoch predictions:",
+            epoch_predictions[:20]
+        )
