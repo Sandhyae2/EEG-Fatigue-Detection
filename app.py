@@ -21,17 +21,29 @@ if uploaded_file is not None:
         with open("temp_eeg_file", "wb") as f:
             f.write(uploaded_file.read())
 
-        # STEP 2: Extract features (IMPORTANT: pass file path)
+        # STEP 2: Extract features
         features = extract_features("temp_eeg_file")
+
+        # 🔍 DEBUG 1 (ADD HERE)
+        st.write("Raw feature shape:", np.array(features).shape)
 
         # STEP 3: Convert to numpy array
         features = np.array(features).reshape(1, -1)
+
+        # 🔍 DEBUG 2 (ADD HERE)
+        st.write("Final feature shape (for model):", features.shape)
 
         # STEP 4: Scale features
         features = scaler.transform(features)
 
         # STEP 5: Predict
         prediction = model.predict(features)
+
+        # 🔍 DEBUG 3 (ADD HERE - VERY IMPORTANT)
+        st.write("Model prediction:", prediction)
+
+        # OPTIONAL DEBUG (HIGHLY RECOMMENDED)
+        st.write("Decision score:", model.decision_function(features))
 
         # STEP 6: Output result
         if prediction[0] == 1:
