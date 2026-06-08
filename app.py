@@ -61,12 +61,12 @@ if uploaded_file is not None:
         st.write("Fatigue epochs (%):", round(fatigue_percent, 2))
 
         # Average decision score across epochs
-        decision_scores = model.decision_function(features_scaled)
+        # decision_scores = model.decision_function(features_scaled)
 
-        st.write(
-            "Mean decision score:",
-            round(float(np.mean(decision_scores)), 2)
-        )
+        # st.write(
+        #     "Mean decision score:",
+        #     round(float(np.mean(decision_scores)), 2)
+        # )
 
         # Final decision
         if fatigue_percent >= 50:
@@ -75,7 +75,7 @@ if uploaded_file is not None:
             st.success("✅ Normal State")
 
         # Optional debug
-        st.write(
-            "First 20 epoch predictions:",
-            epoch_predictions[:20]
-        )
+        # st.write(
+        #     "First 20 epoch predictions:",
+        #     epoch_predictions[:20]
+        # )
