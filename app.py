@@ -3,79 +3,155 @@ import numpy as np
 import joblib
 from features import extract_features
 
+# -----------------------------
 # Load model and scaler
+# -----------------------------
 model = joblib.load("svm_fatigue_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-st.title("EEG Fatigue Detection System")
+# -----------------------------
+# Page Config
+# -----------------------------
+st.set_page_config(
+    page_title="EEG Fatigue Detection",
+    page_icon="🧠",
+    layout="centered"
+)
 
+st.title("🧠 EEG Fatigue Detection System")
+st.markdown(
+    "Upload an EEG `.cnt` file to assess fatigue level."
+)
+
+# -----------------------------
+# File Upload
+# -----------------------------
 uploaded_file = st.file_uploader(
-    "Upload EEG file (.cnt or supported format)"
+    "Upload EEG file",
+    type=["cnt"]
 )
 
 if uploaded_file is not None:
 
-    st.success("File uploaded successfully")
+    st.success("✅ File uploaded successfully")
 
-    if st.button("Predict"):
+    if st.button("Predict Fatigue"):
 
-        # Save uploaded file
+        # Save uploaded file temporarily
         with open("temp_eeg_file", "wb") as f:
             f.write(uploaded_file.read())
 
-        # Extract epoch-wise features
+        # ----------------------------------
+        # IMPORTANT DATASET-SPECIFIC FIX
+        # ----------------------------------
         file_name = uploaded_file.name.lower()
 
         if "fatigue" in file_name:
             features = extract_features(
                 "temp_eeg_file",
-                 data_format="int32"
+                data_format="int32"
             )
         else:
             features = extract_features(
                 "temp_eeg_file",
-                 data_format="int16"
+                data_format="int16"
             )
 
-        # st.write("Feature shape:", features.shape)
-        # st.write("Scaler expects:", scaler.n_features_in_)
-
-        # # Scale all epochs
+        # Scale features
         features_scaled = scaler.transform(features)
 
-        # Predict each epoch
+        # Epoch predictions
         epoch_predictions = model.predict(features_scaled)
 
-        # st.write("Model classes:", model.classes_)
-
+        # Probabilities
         probs = model.predict_proba(features_scaled)
 
-        st.write(
-            "Mean fatigue probability:",
-             round(float(np.mean(probs[:,1])), 3)
+        fatigue_probability = (
+            np.mean(probs[:, 1]) * 100
         )
 
-        # Fatigue percentage
-        fatigue_percent = np.mean(epoch_predictions) * 100
+        fatigue_percent = (
+            np.mean(epoch_predictions) * 100
+        )
 
-        st.write("Fatigue epochs (%):", round(fatigue_percent, 2))
+        # -----------------------------
+        # Results Section
+        # -----------------------------
+        st.divider()
 
-        # Average decision score across epochs
-        # decision_scores = model.decision_function(features_scaled)
+        st.subheader("📊 Analysis Results")
 
-        # st.write(
-        #     "Mean decision score:",
-        #     round(float(np.mean(decision_scores)), 2)
-        # )
+        st.metric(
+            "Fatigue Probability",
+            f"{fatigue_probability:.1f}%"
+        )
 
-        # Final decision
-        if fatigue_percent >= 50:
-            st.error("⚠ Fatigue Detected")
+        st.metric(
+            "Fatigue Epochs",
+            f"{fatigue_percent:.1f}%"
+        )
+
+        st.write("### Fatigue Score")
+
+        st.progress(
+            min(int(fatigue_percent), 100)
+        )
+
+        # -----------------------------
+        # Severity Classification
+        # -----------------------------
+        if fatigue_percent < 30:
+
+            st.success(
+                "🟢 Alert State\n\nNo significant fatigue detected."
+            )
+
+        elif fatigue_percent < 60:
+
+            st.warning(
+                "🟡 Mild Fatigue Detected\n\nConsider taking a short break."
+            )
+
         else:
-            st.success("✅ Normal State")
 
-        # Optional debug
-        # st.write(
-        #     "First 20 epoch predictions:",
-        #     epoch_predictions[:20]
-        # )
+            st.error(
+                "🔴 Severe Fatigue Detected\n\nImmediate rest is recommended."
+            )
+
+            # # Alert Sound
+            # try:
+            #     with open("alert.wav", "rb") as audio_file:
+            #         audio_bytes = audio_file.read()
+
+            #     st.audio(
+            #         audio_bytes,
+            #         format="audio/wav",
+            #         autoplay=True
+            #     )
+
+            # except:
+            #     st.warning(
+            #         "Alert sound file (alert.wav) not found."
+            #     )
+
+        # -----------------------------
+        # Expandable Details
+        # -----------------------------
+        with st.expander("🔍 Detailed Results"):
+
+            st.write(
+                "Mean Fatigue Probability:",
+                round(float(fatigue_probability), 2),
+                "%"
+            )
+
+            st.write(
+                "Fatigue Epoch Percentage:",
+                round(float(fatigue_percent), 2),
+                "%"
+            )
+
+            st.write(
+                "Total Epochs Analysed:",
+                len(epoch_predictions)
+            )
