@@ -46,7 +46,7 @@ if uploaded_file is not None:
         # Predict each epoch
         epoch_predictions = model.predict(features_scaled)
 
-        st.write("Model classes:", model.classes_)
+        # st.write("Model classes:", model.classes_)
 
         probs = model.predict_proba(features_scaled)
 
