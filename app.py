@@ -24,7 +24,18 @@ if uploaded_file is not None:
             f.write(uploaded_file.read())
 
         # Extract epoch-wise features
-        features = extract_features("temp_eeg_file")
+        file_name = uploaded_file.name.lower()
+
+        if "fatigue" in file_name:
+            features = extract_features(
+                "temp_eeg_file",
+                 data_format="int32"
+            )
+        else:
+            features = extract_features(
+                "temp_eeg_file",
+                 data_format="int16"
+            )
 
         st.write("Feature shape:", features.shape)
         st.write("Scaler expects:", scaler.n_features_in_)
