@@ -41,7 +41,7 @@ if uploaded_file is not None:
         # st.write("Scaler expects:", scaler.n_features_in_)
 
         # # Scale all epochs
-        # features_scaled = scaler.transform(features)
+        features_scaled = scaler.transform(features)
 
         # Predict each epoch
         epoch_predictions = model.predict(features_scaled)
