@@ -27,10 +27,7 @@ st.markdown(
         background-position: center;
         background-attachment: fixed;
     }
-     h1, h2, h3, h4, h5, h6,
-    p, label, div, span {
-        color: black !important;
-    }
+
     </style>
     """,
     unsafe_allow_html=True
