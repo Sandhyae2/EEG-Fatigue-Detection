@@ -18,12 +18,15 @@ st.set_page_config(
     layout="centered"
 )
 
+# -----------------------------
+# Title
+# -----------------------------
 st.title("🧠 EEG Fatigue Detection System")
 
 st.markdown(
     """
     Upload an EEG (.cnt) file and the model will determine
-    whether the subject is in a normal or fatigue state.
+    whether the subject is in a Normal or Fatigue state.
     """
 )
 
@@ -35,20 +38,23 @@ uploaded_file = st.file_uploader(
     type=["cnt"]
 )
 
+# -----------------------------
+# Prediction Section
+# -----------------------------
 if uploaded_file is not None:
 
     st.success("✅ File uploaded successfully")
 
-    if st.button("Predict Fatigue"):
+    if st.button("Analyze EEG"):
 
         # -----------------------------
-        # Save Uploaded File
+        # Save uploaded file
         # -----------------------------
         with open("temp_eeg_file", "wb") as f:
             f.write(uploaded_file.read())
 
         # -----------------------------
-        # Dataset-Specific CNT Format
+        # Dataset-specific fix
         # -----------------------------
         file_name = uploaded_file.name.lower()
 
@@ -67,16 +73,20 @@ if uploaded_file is not None:
             )
 
         # -----------------------------
-        # Feature Scaling
+        # Scale Features
         # -----------------------------
         features_scaled = scaler.transform(features)
 
         # -----------------------------
         # Predictions
         # -----------------------------
-        epoch_predictions = model.predict(features_scaled)
+        epoch_predictions = model.predict(
+            features_scaled
+        )
 
-        probs = model.predict_proba(features_scaled)
+        probs = model.predict_proba(
+            features_scaled
+        )
 
         fatigue_probability = (
             np.mean(probs[:, 1]) * 100
@@ -86,66 +96,96 @@ if uploaded_file is not None:
             np.mean(epoch_predictions) * 100
         )
 
+        fatigue_epochs = int(
+            np.sum(epoch_predictions)
+        )
+
+        normal_epochs = int(
+            len(epoch_predictions)
+            - fatigue_epochs
+        )
+
         # -----------------------------
-        # Results
+        # Results Header
         # -----------------------------
         st.divider()
 
-        st.subheader("📊 Analysis Results")
-
-        st.metric(
-            "Fatigue Probability",
-            f"{fatigue_probability:.2f}%"
-        )
-
-        st.metric(
-            "Fatigue Epochs",
-            f"{fatigue_percent:.2f}%"
-        )
-
-        st.write("### Fatigue Score")
-
-        st.progress(
-            int(min(fatigue_percent, 100))
+        st.subheader(
+            "📊 Analysis Results"
         )
 
         # -----------------------------
-        # Final Decision
+        # Main Result Cards
         # -----------------------------
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.metric(
+                "Fatigue Probability",
+                f"{fatigue_probability:.2f}%"
+            )
+
+        with col2:
+
+            if fatigue_percent < 50:
+
+                st.metric(
+                    "Detection Result",
+                    "🟢 NORMAL"
+                )
+
+            else:
+
+                st.metric(
+                    "Detection Result",
+                    "🔴 FATIGUE"
+                )
+
+        # -----------------------------
+        # Alert Section
+        # -----------------------------
+        st.divider()
+
+        st.subheader("🚨 Alert Status")
+
         if fatigue_percent < 50:
 
             st.success(
-                "🟢 NORMAL STATE\n\nNo fatigue detected."
+                "🟢 Subject is in a Normal State"
             )
 
         else:
 
-            st.markdown("""
-            <style>
-            .blink {
-                animation: blinker 1s linear infinite;
-                color: red;
-                font-size: 36px;
-                font-weight: bold;
-                text-align: center;
-            }
+            st.markdown(
+                """
+                <style>
+                .blink {
+                    animation: blinker 1s linear infinite;
+                    color: red;
+                    font-size: 36px;
+                    font-weight: bold;
+                    text-align: center;
+                }
 
-            @keyframes blinker {
-                50% { opacity: 0; }
-            }
-            </style>
+                @keyframes blinker {
+                    50% { opacity: 0; }
+                }
+                </style>
 
-            <div class="blink">
-            ⚠️ FATIGUE DETECTED ⚠️
-            </div>
-            """, unsafe_allow_html=True)
+                <div class="blink">
+                ⚠️ FATIGUE DETECTED ⚠️
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
             st.error(
-                "🔴 Fatigue Detected\n\nRest is recommended."
+                "🔴 Fatigue Detected. Rest is Recommended."
             )
 
             # -----------------------------
-            # Alert Sound
+            # Alarm Sound
             # -----------------------------
             try:
 
@@ -154,7 +194,9 @@ if uploaded_file is not None:
                     "rb"
                 ) as audio_file:
 
-                    audio_bytes = audio_file.read()
+                    audio_bytes = (
+                        audio_file.read()
+                    )
 
                 st.audio(
                     audio_bytes,
@@ -169,20 +211,45 @@ if uploaded_file is not None:
                 )
 
         # -----------------------------
+        # Fatigue Score
+        # -----------------------------
+        st.divider()
+
+        st.subheader(
+            "📈 Fatigue Score"
+        )
+
+        st.progress(
+            int(
+                min(
+                    fatigue_probability,
+                    100
+                )
+            )
+        )
+
+        st.write(
+            f"Current Fatigue Probability: "
+            f"**{fatigue_probability:.2f}%**"
+        )
+
+        # -----------------------------
         # Detailed Results
         # -----------------------------
-        with st.expander("🔍 Detailed Results"):
+        st.divider()
+
+        with st.expander(
+            "🔍 Detailed Analysis"
+        ):
 
             st.write(
-                "Mean Fatigue Probability:",
-                round(float(fatigue_probability), 2),
-                "%"
+                "Fatigue Probability:",
+                f"{fatigue_probability:.2f}%"
             )
 
             st.write(
                 "Fatigue Epoch Percentage:",
-                round(float(fatigue_percent), 2),
-                "%"
+                f"{fatigue_percent:.2f}%"
             )
 
             st.write(
@@ -192,13 +259,10 @@ if uploaded_file is not None:
 
             st.write(
                 "Predicted Fatigue Epochs:",
-                int(np.sum(epoch_predictions))
+                fatigue_epochs
             )
 
             st.write(
                 "Predicted Normal Epochs:",
-                int(
-                    len(epoch_predictions)
-                    - np.sum(epoch_predictions)
-                )
+                normal_epochs
             )
