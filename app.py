@@ -128,7 +128,7 @@ if uploaded_file is not None:
                     )
 
             except:
-        st.warning("mild_alert.mp3 not found")
+                st.warning("mild_alert.mp3 not found")
 
 elif fatigue_percent < 80:
 
