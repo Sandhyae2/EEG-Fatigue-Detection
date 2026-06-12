@@ -22,7 +22,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url("https://www.brainfacts.org/-/media/Brainfacts2/In-the-Lab/Tools-and-Techniques/Article-Images/Mapping-and-Modulating-thumbnail.jpg");
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_4Cf5GnDplRRccThnXo91OjwbEl8CjfbpQCnDJXdkvgFnFUNKZjy8kF2j&s=10");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
