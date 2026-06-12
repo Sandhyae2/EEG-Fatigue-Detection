@@ -37,13 +37,13 @@ if uploaded_file is not None:
 
     if st.button("Predict Fatigue"):
 
-        # Save uploaded file temporarily
+        # Save uploaded file
         with open("temp_eeg_file", "wb") as f:
             f.write(uploaded_file.read())
 
-        # ----------------------------------
-        # IMPORTANT DATASET-SPECIFIC FIX
-        # ----------------------------------
+        # -----------------------------
+        # Dataset-specific format fix
+        # -----------------------------
         file_name = uploaded_file.name.lower()
 
         if "fatigue" in file_name:
@@ -57,13 +57,13 @@ if uploaded_file is not None:
                 data_format="int16"
             )
 
-        # Scale features
+        # -----------------------------
+        # Prediction
+        # -----------------------------
         features_scaled = scaler.transform(features)
 
-        # Epoch predictions
         epoch_predictions = model.predict(features_scaled)
 
-        # Probabilities
         probs = model.predict_proba(features_scaled)
 
         fatigue_probability = (
@@ -75,7 +75,7 @@ if uploaded_file is not None:
         )
 
         # -----------------------------
-        # Results Section
+        # Results
         # -----------------------------
         st.divider()
 
@@ -100,6 +100,7 @@ if uploaded_file is not None:
         # -----------------------------
         # Severity Classification
         # -----------------------------
+
         if fatigue_percent < 30:
 
             st.success(
@@ -112,13 +113,6 @@ if uploaded_file is not None:
                 "🟡 Mild Fatigue Detected\n\nConsider taking a short break."
             )
 
-        else:
-
-            st.error(
-                "🔴 Severe Fatigue Detected\n\nImmediate rest is recommended."
-            )
-
-            # Alert Sound
             try:
                 with open("mild_alert.mp3", "rb") as audio_file:
                     st.audio(
@@ -126,65 +120,69 @@ if uploaded_file is not None:
                         format="audio/mp3",
                         autoplay=True
                     )
-
             except:
-                st.warning("mild_alert.mp3 not found")
+                st.warning(
+                    "mild_alert.mp3 not found"
+                )
 
-elif fatigue_percent < 80:
+        elif fatigue_percent < 80:
 
-    st.warning(
-        "🟠 High Fatigue Detected\n\nRest is strongly recommended."
-    )
-
-    # Mild alert sound again
-    try:
-        with open("mild_alert.mp3", "rb") as audio_file:
-            st.audio(
-                audio_file.read(),
-                format="audio/mp3",
-                autoplay=True
+            st.warning(
+                "🟠 High Fatigue Detected\n\nRest is strongly recommended."
             )
-    except:
-        st.warning("mild_alert.mp3 not found")
 
-else:
-    st.markdown("""
-    <style>
-    .blink {
-        animation: blinker 1s linear infinite;
-        color: red;
-        font-size: 36px;
-        font-weight: bold;
-        text-align: center;
-    }
+            try:
+                with open("mild_alert.mp3", "rb") as audio_file:
+                    st.audio(
+                        audio_file.read(),
+                        format="audio/mp3",
+                        autoplay=True
+                    )
+            except:
+                st.warning(
+                    "mild_alert.mp3 not found"
+                )
 
-    @keyframes blinker {
-        50% { opacity: 0; }
-    }
-    </style>
+        else:
 
-    <div class="blink">
-    ⚠️ CRITICAL FATIGUE DETECTED ⚠️
-    </div>
-    """, unsafe_allow_html=True)
+            st.markdown("""
+            <style>
+            .blink {
+                animation: blinker 1s linear infinite;
+                color: red;
+                font-size: 36px;
+                font-weight: bold;
+                text-align: center;
+            }
 
-    st.error(
-        "🔴 Immediate rest is recommended."
-    )
+            @keyframes blinker {
+                50% { opacity: 0; }
+            }
+            </style>
 
-    # Critical alert sound
-    try:
-        with open("critical_alert.mp3", "rb") as audio_file:
-            st.audio(
-                audio_file.read(),
-                format="audio/mp3",
-                autoplay=True
+            <div class="blink">
+            ⚠️ CRITICAL FATIGUE DETECTED ⚠️
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.error(
+                "🔴 Immediate rest is recommended."
             )
-    except:
-        st.warning("critical_alert.mp3 not found")
+
+            try:
+                with open("critical_alert.mp3", "rb") as audio_file:
+                    st.audio(
+                        audio_file.read(),
+                        format="audio/mp3",
+                        autoplay=True
+                    )
+            except:
+                st.warning(
+                    "critical_alert.mp3 not found"
+                )
 
         # -----------------------------
-        # Expandable Details
+        # Detailed Results
         # -----------------------------
         with st.expander("🔍 Detailed Results"):
 
