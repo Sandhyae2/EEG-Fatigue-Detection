@@ -22,7 +22,14 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url("https://static.vecteezy.com/system/resources/previews/014/731/394/non_2x/brain-analysis-interface-vector.jpg");
+        background:
+        linear-gradient(
+            rgba(255,255,255,0.85),
+            rgba(255,255,255,0.85)
+        ),
+        url("https://static.vecteezy.com/system/resources/previews/014/731/394/non_2x/brain-analysis-interface-vector.jpg");
+
+#background-image: url("https://static.vecteezy.com/system/resources/previews/014/731/394/non_2x/brain-analysis-interface-vector.jpg");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
