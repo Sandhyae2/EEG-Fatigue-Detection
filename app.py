@@ -118,21 +118,70 @@ if uploaded_file is not None:
                 "🔴 Severe Fatigue Detected\n\nImmediate rest is recommended."
             )
 
-            # # Alert Sound
-            # try:
-            #     with open("alert.wav", "rb") as audio_file:
-            #         audio_bytes = audio_file.read()
+            # Alert Sound
+            try:
+                with open("mild_alert.mp3", "rb") as audio_file:
+                    st.audio(
+                        audio_file.read(),
+                        format="audio/mp3",
+                        autoplay=True
+                    )
 
-            #     st.audio(
-            #         audio_bytes,
-            #         format="audio/wav",
-            #         autoplay=True
-            #     )
+            except:
+        st.warning("mild_alert.mp3 not found")
 
-            # except:
-            #     st.warning(
-            #         "Alert sound file (alert.wav) not found."
-            #     )
+elif fatigue_percent < 80:
+
+    st.warning(
+        "🟠 High Fatigue Detected\n\nRest is strongly recommended."
+    )
+
+    # Mild alert sound again
+    try:
+        with open("mild_alert.mp3", "rb") as audio_file:
+            st.audio(
+                audio_file.read(),
+                format="audio/mp3",
+                autoplay=True
+            )
+    except:
+        st.warning("mild_alert.mp3 not found")
+
+else:
+    st.markdown("""
+    <style>
+    .blink {
+        animation: blinker 1s linear infinite;
+        color: red;
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    @keyframes blinker {
+        50% { opacity: 0; }
+    }
+    </style>
+
+    <div class="blink">
+    ⚠️ CRITICAL FATIGUE DETECTED ⚠️
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.error(
+        "🔴 Immediate rest is recommended."
+    )
+
+    # Critical alert sound
+    try:
+        with open("critical_alert.mp3", "rb") as audio_file:
+            st.audio(
+                audio_file.read(),
+                format="audio/mp3",
+                autoplay=True
+            )
+    except:
+        st.warning("critical_alert.mp3 not found")
 
         # -----------------------------
         # Expandable Details
