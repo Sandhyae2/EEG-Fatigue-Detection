@@ -22,7 +22,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url("https://www.axionbiosystems.com/sites/default/files/inline-images/Neural%20Organoid%20Brain_1.gif");
+        background-image: url("https://www.brainfacts.org/-/media/Brainfacts2/In-the-Lab/Tools-and-Techniques/Article-Images/Mapping-and-Modulating-thumbnail.jpg");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
