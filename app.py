@@ -35,11 +35,11 @@ section[data-testid="stFileUploader"] * {
 }
 
 
-/* Make all text white */
-h1, h2, h3, h4, h5, h6,
-p, label, span, div {
-    color: white !important;
-}
+# /* Make all text white */
+# h1, h2, h3, h4, h5, h6,
+# p, label, span, div {
+#     color: white !important;
+# }
 
     </style>
     """,
