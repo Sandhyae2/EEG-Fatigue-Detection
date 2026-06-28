@@ -20,7 +20,7 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    # .stApp {
+    .stApp {
     section[data-testid="stFileUploader"] {
         background-image: url("https://static.vecteezy.com/system/resources/previews/014/731/394/non_2x/brain-analysis-interface-vector.jpg");
         background-size: cover;
