@@ -23,7 +23,9 @@ st.markdown(
     # .stApp {
     section[data-testid="stFileUploader"] {
         background-image: url("https://static.vecteezy.com/system/resources/previews/014/731/394/non_2x/brain-analysis-interface-vector.jpg");
-        background-color: black;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         padding: 15px;
         border-radius: 10px;
 }
