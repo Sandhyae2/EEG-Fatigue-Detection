@@ -13,10 +13,6 @@ scaler = joblib.load("scaler.pkl")
 # Page Configuration
 # -----------------------------
 st.set_page_config(
-    st.markdown(
-    "<h1 style='color:#FFFFFF; text-align:center;'>🧠 EEG Fatigue Detection System</h1>",
-    unsafe_allow_html=True
-),
     page_icon="🧠",
     layout="centered"
 )
@@ -35,6 +31,11 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+st.markdown(
+    "<h1 style='color:#FFFFFF; text-align:center;'>🧠 EEG Fatigue Detection System</h1>",
+    unsafe_allow_html=True
+),
 
 # -----------------------------
 # Title
