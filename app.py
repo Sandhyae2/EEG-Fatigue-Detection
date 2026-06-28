@@ -21,7 +21,7 @@ st.markdown(
     """
     <style>
     .stApp {
-    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmyGDsjPMBMZcBbqQEej3KrAiW2J-UXorWYA&s");
+    background-image: url("https://t3.ftcdn.net/jpg/19/65/68/40/360_F_1965684024_LkTMXJMePi5OXHIvqNYF5rsZXQGzEaKy.jpg");
     background-size: cover; 
     background-position: center;
     background-attachment: fixed; 
