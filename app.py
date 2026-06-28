@@ -20,12 +20,18 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .stApp {
+    # .stApp {
+    section[data-testid="stFileUploader"] {
         background-image: url("https://static.vecteezy.com/system/resources/previews/014/731/394/non_2x/brain-analysis-interface-vector.jpg");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
+        background-color: black;
+        padding: 15px;
+        border-radius: 10px;
+}
+
+section[data-testid="stFileUploader"] * {
+    color: white !important;
+}
+
 
 /* Make all text white */
 h1, h2, h3, h4, h5, h6,
