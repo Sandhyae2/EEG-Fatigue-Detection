@@ -21,18 +21,15 @@ st.markdown(
     """
     <style>
     .stApp {
-    # section[data-testid="stFileUploader"] {
-        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxnxdfWV76UjR6gIHZewnTp2mxk_LOx_xPPQ&s");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        padding: 15px;
-        border-radius: 10px;
+    background-image: url("https://static.vecteezy.com/system/resources/previews/014/731/394/non_2x/brain-analysis-interface-vector.jpg");
+    background-size: cover; 
+    background-position: center;
+    background-attachment: fixed; 
 }
 
 # section[data-testid="stFileUploader"] * {
 #     color: white !important;
-}
+# }
 
 
     </style>
