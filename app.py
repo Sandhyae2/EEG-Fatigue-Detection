@@ -37,7 +37,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.markdown(
-    "<h1 style='color:#0FFFFF; text-align:center;'>🧠 EEG Fatigue Detection System</h1>",
+    "<h1 style='color:#00FFFF; text-align:center;'>🧠 EEG Fatigue Detection System</h1>",
     unsafe_allow_html=True
 )
 
