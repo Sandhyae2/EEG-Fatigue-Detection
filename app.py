@@ -27,6 +27,12 @@ st.markdown(
         background-attachment: fixed;
     }
 
+/* Make all text white */
+h1, h2, h3, h4, h5, h6,
+p, label, span, div {
+    color: white !important;
+}
+
     </style>
     """,
     unsafe_allow_html=True
@@ -34,7 +40,7 @@ st.markdown(
 st.markdown(
     "<h1 style='color:#FFFFFF; text-align:center;'>🧠 EEG Fatigue Detection System</h1>",
     unsafe_allow_html=True
-),
+)
 
 # # -----------------------------
 # # Title
