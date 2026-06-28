@@ -30,8 +30,8 @@ st.markdown(
         border-radius: 10px;
 }
 
-section[data-testid="stFileUploader"] * {
-    color: white !important;
+# section[data-testid="stFileUploader"] * {
+#     color: white !important;
 }
 
 
