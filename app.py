@@ -20,8 +20,8 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /*.stApp {*/
-    section[data-testid="stFileUploader"] {
+    .stApp {
+    # section[data-testid="stFileUploader"] {
         background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxnxdfWV76UjR6gIHZewnTp2mxk_LOx_xPPQ&s");
         background-size: cover;
         background-position: center;
