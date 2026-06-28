@@ -25,7 +25,7 @@ st.markdown(
         background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxnxdfWV76UjR6gIHZewnTp2mxk_LOx_xPPQ&s");
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
+    
         padding: 15px;
         border-radius: 10px;
 }
@@ -34,12 +34,6 @@ section[data-testid="stFileUploader"] * {
     color: white !important;
 }
 
-
-# /* Make all text white */
-# h1, h2, h3, h4, h5, h6,
-# p, label, span, div {
-#     color: white !important;
-# }
 
     </style>
     """,
