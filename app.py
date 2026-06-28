@@ -25,7 +25,7 @@ st.markdown(
         background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxnxdfWV76UjR6gIHZewnTp2mxk_LOx_xPPQ&s");
         background-size: cover;
         background-position: center;
-    
+        background-attachment: fixed;
         padding: 15px;
         border-radius: 10px;
 }
